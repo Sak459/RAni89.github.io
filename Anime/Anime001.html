@@ -323,6 +323,7 @@ const episodeTitle = document.getElementById('episodeTitle');
 
 const favBtn = document.getElementById('favoriteBtn');
 const watchedBtn = document.getElementById('watchedBtn');
+const currentPage = window.location.pathname;
 
 let episodes = [];
 let currentEpisode = localStorage.getItem(seriesId+'_lastEpisode');
@@ -358,9 +359,10 @@ function toggleFavorite(){
   }else{
 
     favs.push({
-      id: seriesId,
-      title: document.getElementById("animeTitle").textContent,
-      banner: document.getElementById("poster").src
+     id: seriesId,
+     title:         document.getElementById("animeTitle").textContent,
+     banner: document.getElementById("poster").src,
+     page: currentPage
     });
 
     favBtn.classList.add('active');
