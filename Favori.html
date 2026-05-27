@@ -268,8 +268,14 @@ function loadFavorites(){
     // Clic en la tarjeta abre la serie
     card.onclick = () => {
   if(series.page){
-    window.location.href = series.page;
-  }
+
+  window.location.href = series.page;
+
+}else{
+
+  showToast("❌ Ruta no encontrada", "#ff4444");
+
+}
 };
 
     // Clic en botón ❌ quita de favoritos
