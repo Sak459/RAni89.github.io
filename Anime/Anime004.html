@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plantilla Rakuen Hentai</title>
+<title>Plantilla Rakuen Anime</title>
 
 <style>
 :root{
@@ -11,6 +11,12 @@
   --accent:#ff3c78;
   --card:#1a1a1a;
   --text:#fff;
+}
+
+html, body{
+  position:fixed;
+  width:98%;
+  height:100%;
 }
 
 body{
@@ -24,6 +30,7 @@ body{
   align-items:center;
   height:100vh;
   overflow:hidden;
+  overscroll-behavior: none;
 }
 
 .header-fixed{
@@ -87,12 +94,16 @@ header{
   flex-grow:1;
   overflow-y:auto;
   padding:8px;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .episode-list{
   display:flex;
   flex-direction:column;
   gap:6px;
+  touch-action: pan-y;
 }
 
 .episode{
@@ -244,7 +255,7 @@ header{
 
 <div class="header-fixed">
 
-  <img class="banner-top" src="https://image.tmdb.org/t/p/original/olR0aesiPDkGlAKvYxKKoILF5hS.jpg">
+  <img class="banner-top" src="https://media.themoviedb.org/t/p/w500_and_h282_face/olR0aesiPDkGlAKvYxKKoILF5hS.jpg">
 
   <div class="series-actions">
     <div class="action-btn" id="favoriteBtn">❤️ Favoritos</div>
@@ -298,7 +309,10 @@ const episodes = [
   { url: 'https://pixeldrain.com/api/file/sZrhFtAQ', title: 'Episodio 6', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/n3LzKWE7dWMnY7GadShIQbIbMCV.jpg' },
   { url: 'https://pixeldrain.com/api/file/V5wrdkzD', title: 'Episodio 7', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/eHg7mznAfIkWZ9ml9LAYiS9cG19.jpg' },
   { url: 'https://huggingface.co/ElRompeAnosFullAnal/ElRompeAnosFullAnal/resolve/main/StBHero08.mp4?download=true', title: 'Episodio 8', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/z4KyRFdfWwIW88y0KzP32oxneAs.jpg' },
-  { url: 'https://pixeldrain.com/api/file/3bhv7QZ2', title: 'Episodio 9', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/v2gnrXpbheSWcJ9Wen4x6Q2nt4j.jpg' }
+  { url: 'https://pixeldrain.com/api/file/3bhv7QZ2', title: 'Episodio 9', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/v2gnrXpbheSWcJ9Wen4x6Q2nt4j.jpg' },
+  { url: 'https://huggingface.co/ElRompeAnosFullAnal/ElRompeAnosFullAnal/resolve/main/YuushaknSCY9tKK10.mp4', title: 'Episodio 10', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/u0Glh8jaYOORBhsS0m3TiB0wKfo.jpg' },
+  { url: 'https://huggingface.co/ElRompeAnosFullAnal/ElRompeAnosFullAnal/resolve/main/YuushaknSCY9tKK11.mp4', title: 'Episodio 11', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/doiixQlmVxPW5AeQjzwYECqleki.jpg' },
+  { url: 'https://huggingface.co/ElRompeAnosFullAnal/ElRompeAnosFullAnal/resolve/main/YuushaknSCY9tKK12.mp4', title: 'Episodio 12', thumbnail: 'https://media.themoviedb.org/t/p/w500_and_h282_face/wWL9EdB94235eUYegH9AYtHKIyH.jpg' }
   // añade más episodios aquí
 ];
 
