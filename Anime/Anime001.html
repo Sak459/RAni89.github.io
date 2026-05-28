@@ -24,6 +24,7 @@ body{
   font-family:'Segoe UI',sans-serif;
   background:var(--bg);
   color:var(--text);
+  padding:5px;
   min-height:100vh;
   overflow-x:hidden;
   display:flex;
@@ -47,13 +48,13 @@ img{
 
 .banner-top{
   width:100%;
-  height:220px;
+  height:205px;
   object-fit:cover;
-  border-radius:0 0 18px 18px;
+  border-radius:8px 8px 8px 8px;
 }
 
 .poster{
-  width:140px;
+  width:150px;
   border-radius:16px;
   margin-top:-70px;
   z-index:5;
@@ -121,6 +122,7 @@ img{
   max-width:1000px;
   flex-grow:1;
   overflow-y:auto;
+  padding:8px;
   padding-bottom:20px;
 }
 
@@ -132,8 +134,8 @@ img{
 
 .episode{
   background:var(--card);
-  border-radius:16px;
-  min-height:85px;
+  border-radius:14px;
+  min-height:55px;
   background-size:cover;
   background-position:center;
   cursor:pointer;
@@ -502,6 +504,25 @@ function renderEpisodes(){
   });
 
   updateUI();
+  
+  /* Scroll automático al último episodio visto */
+
+  if(currentEpisode !== null && episodes[currentEpisode]){
+
+    episodeTitle.textContent =
+      episodes[currentEpisode].title;
+
+    setTimeout(()=>{
+
+      document.querySelectorAll('.episode')[currentEpisode]
+        ?.scrollIntoView({
+          behavior:'smooth',
+          block:'center'
+        });
+
+    },2300);
+
+  }
 
 }
 
