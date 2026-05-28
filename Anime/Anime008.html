@@ -303,6 +303,8 @@ const TMDB_API = "b6083b855479a79fd9acdb0a2789f126";
 /* Anime */
 const tmdbType = "tv";
 const tmdbId = 217766;
+/* Título personalizado */
+const customTitle = "Zom 100: Zombie ni Naru made ni Shitai 100 no Koto";
 
 /* Temporada */
 const seasonNumber = 1;
@@ -429,43 +431,9 @@ async function loadAnime(){
     document.getElementById("poster").src =
       `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
-    /* Título */
-    /* Obtener traducciones */
-const translationsReq = await fetch(
-  `https://api.themoviedb.org/3/${tmdbType}/${tmdbId}/translations?api_key=${TMDB_API}`
-);
-
-const translationsData = await translationsReq.json();
-
-/* Buscar traducción en inglés */
-const englishTranslation = translationsData.translations.find(
-  t => t.iso_639_1 === "en"
-);
-
-/* Título final */
-let finalTitle;
-
-/* Series */
-if(tmdbType === "tv"){
-
-  finalTitle =
-    englishTranslation?.data?.name ||
-    data.name;
-
-}
-
-/* Películas */
-else{
-
-  finalTitle =
-    englishTranslation?.data?.title ||
-    data.title;
-
-}
-
-/* Mostrar título */
+    /* Título personalizado */
 document.getElementById("animeTitle").textContent =
-  finalTitle;
+  customTitle;
 
     /* Sinopsis */
     document.getElementById("animeDescription").textContent =
@@ -599,7 +567,7 @@ function renderEpisodes(){
           block:'center'
         });
 
-    },2300);
+    },1300);
 
   }
 
