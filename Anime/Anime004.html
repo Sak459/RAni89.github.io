@@ -303,6 +303,8 @@ const TMDB_API = "b6083b855479a79fd9acdb0a2789f126";
 /* Anime */
 const tmdbType = "tv";
 const tmdbId = 249907;
+/* Título personalizado */
+const customTitle = "Yuusha-kei ni Shosu: Choubatsu Yuusha 9004-tai Keimu Kiroku";
 
 /* Temporada */
 const seasonNumber = 1;
@@ -429,9 +431,9 @@ async function loadAnime(){
     document.getElementById("poster").src =
       `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
-    /* Título */
-    document.getElementById("animeTitle").textContent =
-      data.name || data.title;
+    /* Título personalizado */
+document.getElementById("animeTitle").textContent =
+  customTitle;
 
     /* Sinopsis */
     document.getElementById("animeDescription").textContent =
@@ -565,7 +567,7 @@ function renderEpisodes(){
           block:'center'
         });
 
-    },2300);
+    },1300);
 
   }
 
