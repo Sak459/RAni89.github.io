@@ -301,7 +301,10 @@ img{
 const TMDB_API = "b6083b855479a79fd9acdb0a2789f126";
 
 /* Anime */
-const animeName = "Solo Leveling";
+const tmdbType = "tv";
+const tmdbId = 127532;
+/* Título personalizado */
+const customTitle = "Solo Leveling";
 
 /* Temporada */
 const seasonNumber = 1;
@@ -426,69 +429,106 @@ async function loadAnime(){
 
   try{
 
-    /* Buscar anime */
-    const searchReq = await fetch(
-      `https://api.themoviedb.org/3/search/tv?api_key=${TMDB_API}&language=es-ES&query=${encodeURIComponent(animeName)}`
+    /* Obtener datos */
+
+    const detailsReq = await fetch(
+      `https://api.themoviedb.org/3/${tmdbType}/${tmdbId}?api_key=${TMDB_API}&language=es-ES`
     );
 
-    const searchData = await searchReq.json();
-
-    const anime = searchData.results[0];
+    const data = await detailsReq.json();
 
     /* Banner */
     document.getElementById("banner").src =
-      `https://image.tmdb.org/t/p/original${anime.backdrop_path}`;
+      `https://image.tmdb.org/t/p/original${data.backdrop_path}`;
 
     /* Poster */
     document.getElementById("poster").src =
-      `https://image.tmdb.org/t/p/w500${anime.poster_path}`;
+      `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
-    /* Título */
-    document.getElementById("animeTitle").textContent =
-      anime.name;
+    /* Título personalizado */
+document.getElementById("animeTitle").textContent =
+  customTitle;
 
     /* Sinopsis */
     document.getElementById("animeDescription").textContent =
-      anime.overview || "Sin descripción disponible.";
+      data.overview || "Sin descripción disponible.";
 
-    /* Detalles */
-    const detailsReq = await fetch(
-      `https://api.themoviedb.org/3/tv/${anime.id}?api_key=${TMDB_API}&language=es-ES`
-    );
-
-    const details = await detailsReq.json();
-
-    const genres = details.genres
+    /* Géneros */
+    const genres = data.genres
       .map(g => g.name)
       .join(", ");
 
+    /* Año */
+    const year =
+      (data.first_air_date || data.release_date || "")
+      .split("-")[0];
+
+    /* Episodios o duración */
+
+    let extraInfo = "";
+
+    if(tmdbType === "tv"){
+
+      extraInfo =
+        `${data.number_of_episodes} Episodios`;
+
+    }else{
+
+      extraInfo =
+        `${data.runtime} Min`;
+
+    }
+
+    /* Datos */
     document.getElementById("animeMeta").innerHTML =
       `
-      ⭐ ${details.vote_average.toFixed(1)}
-      • ${details.first_air_date?.split("-")[0]}
+      ⭐ ${data.vote_average.toFixed(1)}
+      • ${year}
       • ${genres}
-      • ${details.number_of_episodes} Episodios
+      • ${extraInfo}
       `;
 
-    /* Temporada */
-    const seasonReq = await fetch(
-      `https://api.themoviedb.org/3/tv/${anime.id}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
-    );
+    /* ================= SERIES ================= */
 
-    const seasonData = await seasonReq.json();
+    if(tmdbType === "tv"){
 
-    episodes = seasonData.episodes.map((ep, index)=>({
+      const seasonReq = await fetch(
+        `https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
+      );
 
-      title:
-        `Episodio ${ep.episode_number} - ${ep.name}`,
+      const seasonData = await seasonReq.json();
 
-      url: videoLinks[index] || '',
+      episodes = seasonData.episodes.map((ep,index)=>({
 
-      thumbnail: ep.still_path
-        ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
-        : `https://image.tmdb.org/t/p/original${anime.backdrop_path}`
+        title:
+          `Episodio ${ep.episode_number} - ${ep.name}`,
 
-    }));
+        url: videoLinks[index] || '',
+
+        thumbnail: ep.still_path
+          ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
+          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+      }));
+
+    }
+
+    /* ================= PELÍCULAS ================= */
+
+    else{
+
+      episodes = [{
+
+        title: data.title,
+
+        url: videoLinks[0] || '',
+
+        thumbnail:
+          `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+      }];
+
+    }
 
     renderEpisodes();
 
@@ -541,7 +581,7 @@ function renderEpisodes(){
           block:'center'
         });
 
-    },2300);
+    },1300);
 
   }
 
