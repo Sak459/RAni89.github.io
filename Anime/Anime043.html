@@ -548,6 +548,32 @@ document.getElementById("animeTitle").textContent =
     /* ================= SERIES ================= */
 
     if(tmdbType === "tv"){
+    
+    /* Datos de temporada */
+
+const seasonInfoReq = await fetch(
+  `https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
+);
+
+const seasonInfo = await seasonInfoReq.json();
+
+/* Cambiar descripción por la de la temporada */
+
+if(seasonInfo.overview){
+
+  document.getElementById("animeDescription").textContent =
+    seasonInfo.overview;
+
+}
+
+/* Cambiar poster por el de la temporada */
+
+if(seasonInfo.poster_path){
+
+  document.getElementById("poster").src =
+    `https://image.tmdb.org/t/p/w500${seasonInfo.poster_path}`;
+
+}
 
       const seasonReq = await fetch(
         `https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
