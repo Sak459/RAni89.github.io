@@ -376,16 +376,23 @@ img{
 
 <script>
 
+/* ================= TMDB ================= */
+
 const TMDB_API = "b6083b855479a79fd9acdb0a2789f126";
 
 /* Anime */
 const tmdbType = "tv";
 const tmdbId = 240411;
+
 /* Título personalizado */
 const customTitle = "Dandadan";
 
-/* Temporada */
+/* Temporada de TMDB */
 const seasonNumber = 1;
+
+/* Episodios que quieres mostrar */
+const firstEpisode = 1;
+const lastEpisode = 12;
 
 /* ID local */
 const seriesId = "Anime009";
@@ -552,7 +559,7 @@ document.getElementById("animeTitle").textContent =
       
      /* Mostrar botón solo si la sinopsis es larga */
 
-        if(data.overview.length < 200){
+        if(data.overview.length < 180){
 
         toggleDescription.style.display = "none";
 
@@ -616,18 +623,29 @@ document.getElementById("animeTitle").textContent =
 
       const seasonData = await seasonReq.json();
 
-      episodes = seasonData.episodes.map((ep,index)=>({
+      const episodiosDisponibles = seasonData.episodes
+  .slice(firstEpisode - 1, lastEpisode)
+  .map((ep, index) => ({
+    ...ep,
+    video: videoLinks[index]
+  }))
+  .filter(ep =>
+    ep.video &&
+    ep.air_date &&
+    new Date(ep.air_date) <= new Date()
+  );
 
-        title:
-          `Episodio ${ep.episode_number}`,
+episodes = episodiosDisponibles.map((ep, index) => ({
 
-        url: videoLinks[index] || '',
+  title: `Episodio ${index + 1}`,
 
-        thumbnail: ep.still_path
-          ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
-          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+  url: ep.video,
 
-      }));
+  thumbnail: ep.still_path
+    ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
+    : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+}));
 
     }
 
