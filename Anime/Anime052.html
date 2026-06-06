@@ -387,6 +387,8 @@ const tmdbId = 123249;
 /* Título personalizado */
 const customTitle = "Sono Bisque Doll wa Koi wo Suru Season 2";
 
+const customPoster = "https://image.tmdb.org/t/p/w500/ngjecFkfZQltZwCFgvy2hR1f3M8.jpg";
+
 /* Temporada de TMDB */
 const seasonNumber = 1;
 
@@ -547,7 +549,7 @@ async function loadAnime(){
 
     /* Poster */
     document.getElementById("poster").src =
-      `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+  customPoster || `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
