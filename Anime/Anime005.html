@@ -550,7 +550,7 @@ document.getElementById("animeTitle").textContent =
       
      /* Mostrar botón solo si la sinopsis es larga */
 
-        if(data.overview.length < 200){
+        if(data.overview.length < 180){
 
         toggleDescription.style.display = "none";
 
@@ -614,18 +614,27 @@ document.getElementById("animeTitle").textContent =
 
       const seasonData = await seasonReq.json();
 
-      episodes = seasonData.episodes.map((ep,index)=>({
+      const episodiosDisponibles = seasonData.episodes.filter((ep, index) => {
 
-        title:
-          `Episodio ${ep.episode_number}`,
+  return (
+    videoLinks[index] &&
+    ep.air_date &&
+    new Date(ep.air_date) <= new Date()
+  );
 
-        url: videoLinks[index] || '',
+});
 
-        thumbnail: ep.still_path
-          ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
-          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+episodes = episodiosDisponibles.map((ep, index) => ({
 
-      }));
+  title: `Episodio ${ep.episode_number}`,
+
+  url: videoLinks[index],
+
+  thumbnail: ep.still_path
+    ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
+    : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+}));
 
     }
 
