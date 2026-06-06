@@ -387,6 +387,8 @@ const tmdbId = 209867;
 /* Título personalizado */
 const customTitle = "Sousou no Frieren";
 
+const customPoster = "https://image.tmdb.org/t/p/w500/v7i3yNKxsDwB5IG9ElWgOGPieE8.jpg";
+
 /* Temporada de TMDB */
 const seasonNumber = 1;
 
@@ -561,7 +563,7 @@ async function loadAnime(){
 
     /* Poster */
     document.getElementById("poster").src =
-      `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+  customPoster || `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
