@@ -387,6 +387,8 @@ const tmdbId = 240411;
 /* Título personalizado */
 const customTitle = "Dandadan 2nd Season";
 
+const customPoster = "https://image.tmdb.org/t/p/w500/wQy1dCYgdSwoY78aKFTWFT1xADX.jpg";
+
 /* Temporada de TMDB */
 const seasonNumber = 1;
 
@@ -547,7 +549,7 @@ async function loadAnime(){
 
     /* Poster */
     document.getElementById("poster").src =
-      `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+  customPoster || `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
