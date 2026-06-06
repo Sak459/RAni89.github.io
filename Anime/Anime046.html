@@ -265,10 +265,58 @@ img{
 .toast.show{
   opacity:1;
 }
+
+/* Loading Screen */
+
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+  transition:opacity .4s ease;
+}
+
+#loadingScreen.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.spinner{
+  width:70px;
+  height:70px;
+  border:4px solid rgba(255,255,255,.15);
+  border-top:4px solid var(--accent);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+.loading-text{
+  margin-top:15px;
+  color:#fff;
+  font-size:1.5rem;
+}
+
+@keyframes spin{
+  from{
+    transform:rotate(0deg);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
 </style>
 </head>
 
 <body>
+
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <div class="loading-text">Cargando...</div>
+</div>
 
 <div class="header-fixed">
 
@@ -338,6 +386,8 @@ const tmdbId = 91455;
 /* Título personalizado */
 const customTitle = "Azur Lane";
 
+const customPoster = "";
+
 /* Temporada */
 const seasonNumber = 1;
 
@@ -374,6 +424,21 @@ const description =
 
 const toggleDescription =
   document.getElementById("toggleDescription");
+  
+  const loadingScreen =
+  document.getElementById("loadingScreen");
+
+function hideLoading(){
+
+  if(!loadingScreen) return;
+
+  loadingScreen.classList.add("hide");
+
+  setTimeout(()=>{
+    loadingScreen?.remove();
+  },400);
+
+}
 
 let episodes = [];
 let currentEpisode = localStorage.getItem(seriesId+'_lastEpisode');
@@ -467,7 +532,7 @@ async function loadAnime(){
 
     /* Poster */
     document.getElementById("poster").src =
-      `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+  customPoster || `https://image.tmdb.org/t/p/w500${data.poster_path}`;
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
@@ -479,7 +544,7 @@ document.getElementById("animeTitle").textContent =
       
      /* Mostrar botón solo si la sinopsis es larga */
 
-        if(data.overview.length < 200){
+        if(data.overview.length < 180){
 
         toggleDescription.style.display = "none";
 
@@ -536,32 +601,6 @@ document.getElementById("animeTitle").textContent =
     /* ================= SERIES ================= */
 
     if(tmdbType === "tv"){
-    
-    /* Datos de temporada */
-
-const seasonInfoReq = await fetch(
-  `https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
-);
-
-const seasonInfo = await seasonInfoReq.json();
-
-/* Cambiar descripción por la de la temporada */
-
-if(seasonInfo.overview){
-
-  document.getElementById("animeDescription").textContent =
-    seasonInfo.overview;
-
-}
-
-/* Cambiar poster por el de la temporada */
-
-if(seasonInfo.poster_path){
-
-  document.getElementById("poster").src =
-    `https://image.tmdb.org/t/p/w500${seasonInfo.poster_path}`;
-
-}
 
       const seasonReq = await fetch(
         `https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${TMDB_API}&language=es-ES`
@@ -569,18 +608,27 @@ if(seasonInfo.poster_path){
 
       const seasonData = await seasonReq.json();
 
-      episodes = seasonData.episodes.map((ep,index)=>({
+      const episodiosDisponibles = seasonData.episodes.filter((ep, index) => {
 
-        title:
-          `Episodio ${ep.episode_number}`,
+  return (
+    videoLinks[index] &&
+    ep.air_date &&
+    new Date(ep.air_date) <= new Date()
+  );
 
-        url: videoLinks[index] || '',
+});
 
-        thumbnail: ep.still_path
-          ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
-          : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+episodes = episodiosDisponibles.map((ep, index) => ({
 
-      }));
+  title: `Episodio ${ep.episode_number}`,
+
+  url: videoLinks[index],
+
+  thumbnail: ep.still_path
+    ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
+    : `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+}));
 
     }
 
@@ -602,10 +650,14 @@ if(seasonInfo.poster_path){
     }
 
     renderEpisodes();
+    
+    hideLoading();
 
   }catch(err){
 
     console.log(err);
+    
+    hideLoading();
 
     showToast("❌ Error cargando TMDb", "#ff4444");
 
