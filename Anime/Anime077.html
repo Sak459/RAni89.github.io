@@ -488,13 +488,42 @@ async function loadAnime(){
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
-  customTitle || data.name || data.title;
-      
+  customTitle;
 
     /* Géneros */
     const genres = data.genres
-  .map(g => g.name)
-  .join(", ");
+      .map(g => g.name)
+      .join(", ");
+
+    /* Año */
+    const year =
+      (data.first_air_date || data.release_date || "")
+      .split("-")[0];
+
+    /* Episodios o duración */
+
+    let extraInfo = "";
+
+    if(tmdbType === "tv"){
+
+      extraInfo =
+        `${data.number_of_episodes} Episodios`;
+
+    }else{
+
+      extraInfo =
+        `${data.runtime} Min`;
+
+    }
+
+    /* Datos */
+    document.getElementById("animeMeta").innerHTML =
+      `
+      ⭐ ${data.vote_average.toFixed(1)}
+      • ${year}
+      • ${genres}
+      • ${extraInfo}
+      `;
 
     /* ================= SERIES ================= */
 
@@ -505,19 +534,6 @@ document.getElementById("animeTitle").textContent =
       );
 
       const seasonData = await seasonReq.json();
-      
-      const seasonYear =
-  seasonData.air_date
-    ? seasonData.air_date.split("-")[0]
-    : "";
-
-document.getElementById("animeMeta").innerHTML =
-`
-⭐ ${data.vote_average.toFixed(1)}
-• ${seasonYear}
-• ${genres}
-• ${seasonData.episodes.length} Episodios
-`;
 
       const episodiosDisponibles = seasonData.episodes.filter((ep, index) => {
 
@@ -547,30 +563,18 @@ episodes = episodiosDisponibles.map((ep, index) => ({
 
     else{
 
-  const year =
-    (data.release_date || "")
-      .split("-")[0];
+      episodes = [{
 
-  document.getElementById("animeMeta").innerHTML =
-  `
-  ⭐ ${data.vote_average.toFixed(1)}
-  • ${year}
-  • ${genres}
-  • ${data.runtime} Min
-  `;
+        title: data.title,
 
-  episodes = [{
+        url: videoLinks[0] || '',
 
-    title: data.title,
+        thumbnail:
+          `https://image.tmdb.org/t/p/original${data.backdrop_path}`
 
-    url: videoLinks[0] || '',
+      }];
 
-    thumbnail:
-      `https://image.tmdb.org/t/p/original${data.backdrop_path}`
-
-  }];
-
-}
+    }
 
     renderEpisodes();
     
@@ -627,7 +631,7 @@ function renderEpisodes(){
           block:'center'
         });
 
-    },1300);
+    },1500);
 
   }
 
