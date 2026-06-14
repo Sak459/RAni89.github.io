@@ -80,40 +80,6 @@ img{
   margin-bottom:12px;
 }
 
-#animeDescription{
-
-  color:#ddd;
-  font-size:.95rem;
-  line-height:1.5;
-
-  display:-webkit-box;
-  -webkit-line-clamp:4;
-  -webkit-box-orient:vertical;
-
-  overflow:hidden;
-
-  transition:.3s;
-
-}
-
-#animeDescription.expanded{
-
-  -webkit-line-clamp:unset;
-
-}
-
-#toggleDescription{
-
-  color:var(--accent);
-
-  margin-top:8px;
-
-  font-size:.9rem;
-
-  cursor:pointer;
-
-}
-
 .series-actions{
   display:flex;
   gap:24px;
@@ -330,14 +296,6 @@ img{
 
     <div class="meta" id="animeMeta"></div>
 
-    <p id="animeDescription">
-       Cargando información...
-     </p>
-
-    <div id="toggleDescription">
-       Ver más
-     </div>
-
   </div>
 
   <div class="series-actions">
@@ -437,12 +395,6 @@ const episodeTitle = document.getElementById('episodeTitle');
 const favBtn = document.getElementById('favoriteBtn');
 const watchedBtn = document.getElementById('watchedBtn');
 const currentPage = window.location.pathname;
-
-const description =
-  document.getElementById("animeDescription");
-
-const toggleDescription =
-  document.getElementById("toggleDescription");
   
   const loadingScreen =
   document.getElementById("loadingScreen");
@@ -555,67 +507,12 @@ async function loadAnime(){
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
-  customTitle;
-
-    /* Sinopsis */
-    document.getElementById("animeDescription").textContent =
-      data.overview || "Sin descripción disponible.";
-      
-     /* Mostrar botón solo si la sinopsis es larga */
-
-        if(data.overview.length < 180){
-
-        toggleDescription.style.display = "none";
-
-          } 
-
-     /* Expandir descripción */
-
-        toggleDescription.onclick = ()=>{
-
-        description.classList.toggle("expanded");
-
-        toggleDescription.textContent =
-            description.classList.contains("expanded")
-               ? "Ver menos"
-               : "Ver más";
-
-          };
+  customTitle || data.name || data.title;
 
     /* Géneros */
     const genres = data.genres
-      .map(g => g.name)
-      .join(", ");
-
-    /* Año */
-    const year =
-      (data.first_air_date || data.release_date || "")
-      .split("-")[0];
-
-    /* Episodios o duración */
-
-    let extraInfo = "";
-
-    if(tmdbType === "tv"){
-
-      extraInfo =
-        `${data.number_of_episodes} Episodios`;
-
-    }else{
-
-      extraInfo =
-        `${data.runtime} Min`;
-
-    }
-
-    /* Datos */
-    document.getElementById("animeMeta").innerHTML =
-      `
-      ⭐ ${data.vote_average.toFixed(1)}
-      • ${year}
-      • ${genres}
-      • ${extraInfo}
-      `;
+  .map(g => g.name)
+  .join(", ");
 
     /* ================= SERIES ================= */
 
@@ -626,6 +523,25 @@ document.getElementById("animeTitle").textContent =
       );
 
       const seasonData = await seasonReq.json();
+      
+      const displayedEpisodes =
+  Math.min(
+    seasonData.episodes.length,
+    lastEpisode
+  ) - firstEpisode + 1;
+
+const seasonYear =
+  seasonData.air_date
+    ? seasonData.air_date.split("-")[0]
+    : "";
+
+document.getElementById("animeMeta").innerHTML =
+`
+⭐ ${data.vote_average.toFixed(1)}
+• ${seasonYear}
+• ${genres}
+• ${displayedEpisodes} Episodios
+`;
 
       const episodiosDisponibles = seasonData.episodes
   .slice(firstEpisode - 1, lastEpisode)
@@ -725,7 +641,7 @@ function renderEpisodes(){
           block:'center'
         });
 
-    },1300);
+    },1500);
 
   }
 
