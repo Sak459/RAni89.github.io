@@ -507,42 +507,12 @@ async function loadAnime(){
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
-  customTitle;
+  customTitle || data.name || data.title;
 
     /* Géneros */
     const genres = data.genres
-      .map(g => g.name)
-      .join(", ");
-
-    /* Año */
-    const year =
-      (data.first_air_date || data.release_date || "")
-      .split("-")[0];
-
-    /* Episodios o duración */
-
-    let extraInfo = "";
-
-    if(tmdbType === "tv"){
-
-      extraInfo =
-        `${data.number_of_episodes} Episodios`;
-
-    }else{
-
-      extraInfo =
-        `${data.runtime} Min`;
-
-    }
-
-    /* Datos */
-    document.getElementById("animeMeta").innerHTML =
-      `
-      ⭐ ${data.vote_average.toFixed(1)}
-      • ${year}
-      • ${genres}
-      • ${extraInfo}
-      `;
+  .map(g => g.name)
+  .join(", ");
 
     /* ================= SERIES ================= */
 
@@ -553,6 +523,25 @@ document.getElementById("animeTitle").textContent =
       );
 
       const seasonData = await seasonReq.json();
+      
+      const displayedEpisodes =
+  Math.min(
+    seasonData.episodes.length,
+    lastEpisode
+  ) - firstEpisode + 1;
+
+const seasonYear =
+  seasonData.air_date
+    ? seasonData.air_date.split("-")[0]
+    : "";
+
+document.getElementById("animeMeta").innerHTML =
+`
+⭐ ${data.vote_average.toFixed(1)}
+• ${seasonYear}
+• ${genres}
+• ${displayedEpisodes} Episodios
+`;
 
       const episodiosDisponibles = seasonData.episodes
   .slice(firstEpisode - 1, lastEpisode)
