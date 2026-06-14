@@ -368,6 +368,7 @@ const videoLinks = [
   'https://player.zilla-networks.com/m3u8/d94dea70f88db478f080fd105bb35f42'
 ];
 
+
 /* ================= ELEMENTOS ================= */
 
 const episodeList = document.getElementById('episodeList');
@@ -488,42 +489,12 @@ async function loadAnime(){
 
     /* Título personalizado */
 document.getElementById("animeTitle").textContent =
-  customTitle;
+  customTitle || data.name || data.title;
 
     /* Géneros */
     const genres = data.genres
-      .map(g => g.name)
-      .join(", ");
-
-    /* Año */
-    const year =
-      (data.first_air_date || data.release_date || "")
-      .split("-")[0];
-
-    /* Episodios o duración */
-
-    let extraInfo = "";
-
-    if(tmdbType === "tv"){
-
-      extraInfo =
-        `${data.number_of_episodes} Episodios`;
-
-    }else{
-
-      extraInfo =
-        `${data.runtime} Min`;
-
-    }
-
-    /* Datos */
-    document.getElementById("animeMeta").innerHTML =
-      `
-      ⭐ ${data.vote_average.toFixed(1)}
-      • ${year}
-      • ${genres}
-      • ${extraInfo}
-      `;
+  .map(g => g.name)
+  .join(", ");
 
     /* ================= SERIES ================= */
 
@@ -534,6 +505,19 @@ document.getElementById("animeTitle").textContent =
       );
 
       const seasonData = await seasonReq.json();
+      
+      const seasonYear =
+  seasonData.air_date
+    ? seasonData.air_date.split("-")[0]
+    : "";
+
+document.getElementById("animeMeta").innerHTML =
+`
+⭐ ${data.vote_average.toFixed(1)}
+• ${seasonYear}
+• ${genres}
+• ${seasonData.episodes.length} Episodios
+`;
 
       const episodiosDisponibles = seasonData.episodes.filter((ep, index) => {
 
@@ -563,18 +547,30 @@ episodes = episodiosDisponibles.map((ep, index) => ({
 
     else{
 
-      episodes = [{
+  const year =
+    (data.release_date || "")
+      .split("-")[0];
 
-        title: data.title,
+  document.getElementById("animeMeta").innerHTML =
+  `
+  ⭐ ${data.vote_average.toFixed(1)}
+  • ${year}
+  • ${genres}
+  • ${data.runtime} Min
+  `;
 
-        url: videoLinks[0] || '',
+  episodes = [{
 
-        thumbnail:
-          `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+    title: data.title,
 
-      }];
+    url: videoLinks[0] || '',
 
-    }
+    thumbnail:
+      `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+
+  }];
+
+}
 
     renderEpisodes();
     
