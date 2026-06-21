@@ -340,35 +340,51 @@ const TMDB_API = "b6083b855479a79fd9acdb0a2789f126";
 
 /* Anime */
 const tmdbType = "tv";
-const tmdbId = 17149;
+const tmdbId = 196944;
+
 /* Título personalizado */
-const customTitle = "Vampire Knight";
+const customTitle = "Watashi no Shiawase na Kekkon 2nd Season";
 
-const customPoster = "";
+const customPoster = "https://image.tmdb.org/t/p/w500/A11kPLG4gRwBBnMB01OLiGl9ubX.jpg";
 
-/* Temporada */
+/* Temporada de TMDB */
 const seasonNumber = 1;
 
+/* Episodios que quieres mostrar */
+const firstEpisode = 13;
+const lastEpisode = 25;
+
 /* ID local */
-const seriesId = "Anime101";
+const seriesId = "Anime100";
 
 /* Tus links de video */
 const videoLinks = [
-  'https://player.zilla-networks.com/m3u8/be243614b6bb6515373e3686e9ef9b71',
-  'https://player.zilla-networks.com/m3u8/79b1550e2a707e7bdb7b0ba81d84823d',
-  'https://player.zilla-networks.com/m3u8/b7ec01094af4351014c02f43d1692e23',
-  'https://player.zilla-networks.com/m3u8/7e2206133fbb16c948c24035bd4e4e0e',
-  'https://player.zilla-networks.com/m3u8/1b151dbed9e48fec167b577bee423c22',
-  'https://player.zilla-networks.com/m3u8/e4c477b487aa05b45ddcfb883ea7fa6c',
-  'https://player.zilla-networks.com/m3u8/606f5d5a9b3b4ea45133ae7ae255b8c9',
-  'https://player.zilla-networks.com/m3u8/bdd9de59c0503e1b677a5152c07659e5',
-  'https://player.zilla-networks.com/m3u8/cc39a26015bfb256dd33ed2482973aa9',
-  'https://player.zilla-networks.com/m3u8/35222e13b72205c8c6174df25d5ac754',
-  'https://player.zilla-networks.com/m3u8/9a8df3962d95c1fa10703ce1ac9c193e',
-  'https://player.zilla-networks.com/m3u8/412798da37745f9550a198a0f54bebaa',
-  'https://player.zilla-networks.com/m3u8/ea69027eaac790fd2bf7f9221aee9a3a'
+  'https://player.zilla-networks.com/m3u8/a510d9ee3cc19577dc8a6dacdf4d816f',
+  'https://player.zilla-networks.com/m3u8/54a826d7c241c38b520365f7e5a27e5a',
+  'https://player.zilla-networks.com/m3u8/50c7d65a49536e0bd2c5f06fb7f64516',
+  'https://player.zilla-networks.com/m3u8/f8acab42c72dbdc6afee52e5adc45140',
+  'https://player.zilla-networks.com/m3u8/81eca0cf666376652a0bca77b86fcc58',
+  'https://player.zilla-networks.com/m3u8/9959460c26e1db1dc4a4f93473665ea7',
+  'https://player.zilla-networks.com/m3u8/f554267e4eedfa3d8f9c5c8479d3d948',
+  'https://player.zilla-networks.com/m3u8/5241e9276c25d7f12edb48421181a370',
+  'https://player.zilla-networks.com/m3u8/05eb54b6cb31d482b9422fe370c10602',
+  'https://player.zilla-networks.com/m3u8/fb30d4e113711d0c9faf3ebfc68be595',
+  'https://player.zilla-networks.com/m3u8/9c5d8b0e8f0c731bf04af84ed8ffe629',
+  'https://player.zilla-networks.com/m3u8/e73b13bffe1b2322be4da4ca28aa6a53',
+  'https://player.zilla-networks.com/m3u8/ced9109583e77597d3cb72a791189852',
+  'https://player.zilla-networks.com/m3u8/0d2acaf1b0070fcb0955fc506f3ff82a',
+  'https://player.zilla-networks.com/m3u8/f77d9c6fe8e5a635fa000b290095d0d0',
+  'https://player.zilla-networks.com/m3u8/1b999208f967b3bc9ba641f1d6a278ef',
+  'https://player.zilla-networks.com/m3u8/13cf6f2aeb777fe89a1cef55757147c2',
+  'https://player.zilla-networks.com/m3u8/f49789bca114506caacca28804fef954',
+  'https://player.zilla-networks.com/m3u8/82dc669da34697f3157f708f86451fca',
+  'https://player.zilla-networks.com/m3u8/e7bfd08cbf8d97d6de44a6cb08fa2643',
+  'https://player.zilla-networks.com/m3u8/fd08624feeb59ecf73ff690e8469ebf3',
+  'https://player.zilla-networks.com/m3u8/e449f8a7f05ce11ead5de466066d74b3',
+  'https://player.zilla-networks.com/m3u8/c84ccac6dec40d5bd9c439ff0385b317',
+  'https://player.zilla-networks.com/m3u8/850ce0c86284523c3a5e8607a9e48e0e',
+  'https://player.zilla-networks.com/m3u8/4552588cca2e0a3c9064d6a13db2a958'
 ];
-
 
 /* ================= ELEMENTOS ================= */
 
@@ -507,7 +523,13 @@ document.getElementById("animeTitle").textContent =
 
       const seasonData = await seasonReq.json();
       
-      const seasonYear =
+      const displayedEpisodes =
+  Math.min(
+    seasonData.episodes.length,
+    lastEpisode
+  ) - firstEpisode + 1;
+
+const seasonYear =
   seasonData.air_date
     ? seasonData.air_date.split("-")[0]
     : "";
@@ -517,24 +539,26 @@ document.getElementById("animeMeta").innerHTML =
 ⭐ ${data.vote_average.toFixed(1)}
 • ${seasonYear}
 • ${genres}
-• ${seasonData.episodes.length} Episodios
+• ${displayedEpisodes} Episodios
 `;
 
-      const episodiosDisponibles = seasonData.episodes.filter((ep, index) => {
-
-  return (
-    videoLinks[index] &&
+      const episodiosDisponibles = seasonData.episodes
+  .slice(firstEpisode - 1, lastEpisode)
+  .map((ep, index) => ({
+    ...ep,
+    video: videoLinks[index]
+  }))
+  .filter(ep =>
+    ep.video &&
     ep.air_date &&
     new Date(ep.air_date) <= new Date()
   );
 
-});
-
 episodes = episodiosDisponibles.map((ep, index) => ({
 
-  title: `Episodio ${ep.episode_number}`,
+  title: `Episodio ${index + 1}`,
 
-  url: videoLinks[index],
+  url: ep.video,
 
   thumbnail: ep.still_path
     ? `https://image.tmdb.org/t/p/w500${ep.still_path}`
@@ -548,30 +572,18 @@ episodes = episodiosDisponibles.map((ep, index) => ({
 
     else{
 
-  const year =
-    (data.release_date || "")
-      .split("-")[0];
+      episodes = [{
 
-  document.getElementById("animeMeta").innerHTML =
-  `
-  ⭐ ${data.vote_average.toFixed(1)}
-  • ${year}
-  • ${genres}
-  • ${data.runtime} Min
-  `;
+        title: data.title,
 
-  episodes = [{
+        url: videoLinks[0] || '',
 
-    title: data.title,
+        thumbnail:
+          `https://image.tmdb.org/t/p/original${data.backdrop_path}`
 
-    url: videoLinks[0] || '',
+      }];
 
-    thumbnail:
-      `https://image.tmdb.org/t/p/original${data.backdrop_path}`
-
-  }];
-
-}
+    }
 
     renderEpisodes();
     
