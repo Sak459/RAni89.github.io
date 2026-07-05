@@ -337,9 +337,44 @@
         grid-template-columns: 1fr; /* Una sola columna en móviles */
       }
     }
+    
+    /* LOADER */
+#loading{
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity .35s ease;
+}
+
+#loading.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.loader{
+    width:80px;
+    height:80px;
+    border:4px solid rgba(255,255,255,.15);
+    border-top:4px solid #ff375e;
+    border-radius:50%;
+    animation:girar .8s linear infinite;
+}
+
+@keyframes girar{
+    to{
+        transform:rotate(360deg);
+    }
+}
   </style>
 </head>
 <body>
+<div id="loading">
+  <div class="loader"></div>
+</div>
 <header>
   <div class="buscador">
     <input type="text" id="inputBusqueda" placeholder="Busca o Filtra tu Contenido....">
@@ -1492,76 +1527,76 @@
     <div class="titulo-serie">Ookami Shoujo to Kuro Ouji OVA</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Rosario to Vampire">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime126.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/2J68l5TWJv7bw5YO9ApVJLNgVyc.jpg" alt="Rosario to Vampire">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Rosario to Vampire</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Rosario to Vampire Capu2">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime127.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/shtGnKDNHNkudG6dbMtPMRHcuYQ.jpg" alt="Rosario to Vampire Capu2">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Rosario to Vampire Capu2</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Shinmai Maou no Testament">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime128.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/rMghV11R38JaDKnmpPkc2LwXOWh.jpg" alt="Shinmai Maou no Testament">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Shinmai Maou no Testament</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Shinmai Maou no Testament OVA">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime129.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/vhY9izvtYAxw59O8RDlVF59H0fh.jpg" alt="Shinmai Maou no Testament OVA">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Shinmai Maou no Testament OVA</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Shinmai Maou no Testament Burst">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime130.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/jT4KBdBjrG5bm01CT6KdK5dQeek.jpg" alt="Shinmai Maou no Testament Burst">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Shinmai Maou no Testament Burst</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Shinmai Maou no Testament Burst OVA">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Anime/Anime131.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/lSW3riH1RZ9pz4XHaWAMPqZF7H3.jpg" alt="Shinmai Maou no Testament Burst OVA">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Shinmai Maou no Testament Burst OVA</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Shinmai Maou no Testament Departures">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Movie/AMovie002.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/aKt2UZ8auyRGYoNMcLajmwgLxoJ.jpg" alt="Shinmai Maou no Testament Departures">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Shinmai Maou no Testament Departures</div>
   </div>
   
-  <div class="serie" data-nombre="Naruto">
+  <div class="serie" data-nombre="Dragon Ball Super: Broly">
     <div class="poster">
-      <a href="Anime/Anime105.html">
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/o27VT52sXxnhI2iWBLLawKsSi3b.jpg" alt="Naruto">
+      <a href="Latino/ALatino002.html">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/5vx8zZ7fDsA8KMO6fiVs3pZmNWQ.jpg" alt="Dragon Ball Super: Broly">
       </a>
     </div>
-    <div class="titulo-serie">Naruto</div>
+    <div class="titulo-serie">Dragon Ball Super: Broly</div>
   </div>
   
   <div class="serie" data-nombre="Naruto">
@@ -1693,6 +1728,16 @@ const series = Array.from(document.querySelectorAll(".serie"));
 const mensajeVacio = document.getElementById("mensaje-vacio");
 const filtroLetras = document.getElementById("filtroLetras");
 const catalogo = document.getElementById("catalogo");
+const loading = document.getElementById("loading");
+
+function showLoading() {
+    loading.classList.remove("hide");
+}
+
+function hideLoading() {
+    loading.classList.add("hide");
+}
+
 
 const LIMITE_INICIAL = 240;
 let modoInicial = true;
@@ -1803,7 +1848,24 @@ function aplicarFiltros() {
 }
 
 // ================== CARGA INICIAL ==================
+showLoading();
 aplicarFiltros();
+
+const imagenes = document.querySelectorAll(".poster img");
+
+let cargadas = 0;
+
+imagenes.forEach(img => {
+    if (img.complete) {
+        cargadas++;
+        if (cargadas === imagenes.length) hideLoading();
+    } else {
+        img.onload = img.onerror = () => {
+            cargadas++;
+            if (cargadas === imagenes.length) hideLoading();
+        };
+    }
+});
 </script>
 <script>
   const modal = document.getElementById("connectionModal");
