@@ -301,7 +301,7 @@
       <div class="series-card">
         <div class="badge-new">Estreno</div>
         <a href="https://player.zilla-networks.com/m3u8/c73495e55343d369a34616864a6091df">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/uR0FopHrAjDlG5q6PZB07a1JOva.jpg" alt="Dragon Ball Super: Super Hero">
+          <img src="https://image.tmdb.org/t/p/w500/uR0FopHrAjDlG5q6PZB07a1JOva.jpg" alt="Dragon Ball Super: Super Hero">
           <div class="series-title">Dragon Ball Super: Super Hero</div>
         </a>
       </div>
@@ -341,7 +341,7 @@ src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.sv
     <div class="series-list">
       <div class="series-card">
         <a href="Anime/Anime001.html">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/cHhJzdUGcEBq6av4wr9jsIvUITH.jpg" alt="Sousou no Frieren 2nd Season">
+          <img src="https://image.tmdb.org/t/p/w500/cHhJzdUGcEBq6av4wr9jsIvUITH.jpg" alt="Sousou no Frieren 2nd Season">
           <div class="series-title">Sousou no Frieren 2nd Season</div>
         </a>
       </div>
@@ -459,7 +459,7 @@ src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.sv
     <div class="series-list">
       <div class="series-card">
         <a href="Latino/ALatino001.html">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/gzs2XMWatrPjVJputJUugbKA4Z.jpg" alt="Shingeki no Kyojin Movie: Kanketsu-hen">
+          <img src="https://image.tmdb.org/t/p/w500/gzs2XMWatrPjVJputJUugbKA4Z.jpg" alt="Shingeki no Kyojin Movie: Kanketsu-hen">
           <div class="series-title">Shingeki no Kyojin Movie: Kanketsu-hen</div>
         </a>
       </div>
@@ -524,7 +524,7 @@ src="https://media.themoviedb.org/t/p/w220_and_h330_face/MZVgsMXNzDRfmRJ1hPHMn97
     <div class="series-list">
       <div class="series-card">
         <a href="Movie/AMovie001.html">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/qjyWDOYokheTTWLMzwJAuvSJeYg.jpg" alt="Sousou no Frieren 2nd Season">
+          <img src="https://image.tmdb.org/t/p/w500/qjyWDOYokheTTWLMzwJAuvSJeYg.jpg" alt="Sousou no Frieren 2nd Season">
           <div class="series-title">Kimetsu no Yaiba Movie: Mugen Jou-hen</div>
         </a>
       </div>
@@ -666,7 +666,7 @@ src="https://media.themoviedb.org/t/p/w220_and_h330_face/MZVgsMXNzDRfmRJ1hPHMn97
   <!-- imagen personalizada -->
   <img
     class="fake-banner"
-    src="https://files.catbox.moe/2sw4db.png"
+    src="https://files.catbox.moe/czvgya.png"
     alt="Publicidad"
   >
 
@@ -688,7 +688,7 @@ function loadAd() {
 
   script1.innerHTML = `
     atOptions = {
-      'key' : 'cd0e499f7bd0e62980f4ca3f80bd16db',
+      'key' : 'ccb7d23a9f7a6eeca31298ea3d62a03f',
       'format' : 'iframe',
       'height' : ${adHeight},
       'width' : ${adWidth},
@@ -699,7 +699,7 @@ function loadAd() {
   var script2 = document.createElement("script");
 
   script2.src =
-  "https://www.highperformanceformat.com/cd0e499f7bd0e62980f4ca3f80bd16db/invoke.js";
+  "https://www.highperformanceformat.com/ccb7d23a9f7a6eeca31298ea3d62a03f/invoke.js";
 
   container.appendChild(script1);
   container.appendChild(script2);
@@ -717,6 +717,21 @@ window.addEventListener("resize", loadAd);
     event.preventDefault();
   });
 </script>
-<script src="https://pl29833173.effectivecpmnetwork.com/0e/b1/82/0eb182903bc33ad4d552e750204c2059.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".series-title").forEach(titulo => {
+
+        const texto = titulo.textContent.trim();
+
+        if (texto.length > 30) {
+            titulo.textContent = texto.substring(0, 30).trim() + "...";
+        }
+
+    });
+
+});
+</script>
+<script src="https://pl29062337.profitablecpmratenetwork.com/e5/ef/1f/e5ef1f01266a4ac20b8edfb4cfd1565d.js"></script>
 </body>
 </html>
