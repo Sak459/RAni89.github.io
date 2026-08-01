@@ -256,131 +256,42 @@ go:236994L
   </header>
 
   <div class="catalogo">
-    <div class="serie">
-      <div class="poster">
+    <div class="serie"
+     data-id="1333100"
+     data-tipo="movie"
+     data-nombre="Shingeki no Kyojin Movie: Kanketsu-hen - The Last Attack">
+    <div class="poster">
         <a href="Latino/ALatino001.html">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/gzs2XMWatrPjVJputJUugbKA4Z.jpg" alt="Shingeki no Kyojin Movie: Kanketsu-hen">
+            <img>
         </a>
-      </div>
-      <div class="titulo-serie">Shingeki no Kyojin Movie: Kanketsu-hen</div>
     </div>
+    <div class="titulo-serie"></div>
+   </div>
 
-    <div class="serie">
-      <div class="poster">
+    <div class="serie"
+     data-id="503314"
+     data-tipo="movie"
+     data-nombre="Dragon Ball Super: Broly">
+    <div class="poster">
         <a href="Latino/ALatino002.html">
-          <img src="https://media.themoviedb.org/t/p/w220_and_h330_face/5vx8zZ7fDsA8KMO6fiVs3pZmNWQ.jpg" alt="Dragon Ball Super: Broly">
+            <img>
         </a>
-      </div>
-      <div class="titulo-serie">Dragon Ball Super: Broly</div>
     </div>
+    <div class="titulo-serie"></div>
+   </div>
 
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
+    <div class="serie"
+     data-id="1311031"
+     data-tipo="movie"
+     data-nombre="Kimetsu no Yaiba Movie: Mugen Jou-hen"
+     data-poster="https://image.tmdb.org/t/p/w220_and_h330_face/qjyWDOYokheTTWLMzwJAuvSJeYg.jpg">
+    <div class="poster">
+        <a href="Latino/ALatino003.html">
+            <img>
         </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
     </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
-
-    <div class="serie">
-      <div class="poster">
-        <a href="CatalogoHent/Hentai055.html">
-          <img src="https" alt="Serie">
-        </a>
-      </div>
-      <div class="titulo-serie">Serie</div>
-    </div>
+    <div class="titulo-serie"></div>
+   </div>
   </div>
 
 <!-- Modal si no hay conexión -->
@@ -403,32 +314,110 @@ go:236994L
 <script>
 const loading = document.getElementById("loading");
 
+const API_KEY = "b6083b855479a79fd9acdb0a2789f126";
+const TMDB = "https://api.themoviedb.org/3";
+const IMG = "https://image.tmdb.org/t/p/w500";
+
 function hideLoading(){
     loading.classList.add("hide");
 }
 
-window.addEventListener("load", () => {
+async function cargarPeliculas(){
+
+    const tarjetas = document.querySelectorAll(".serie");
+
+    const promesas = [];
+
+    tarjetas.forEach(tarjeta=>{
+
+        const id = tarjeta.dataset.id;
+        const tipo = tarjeta.dataset.tipo;
+
+        if(!id || !tipo) return;
+
+        const p = fetch(
+            `${TMDB}/${tipo}/${id}?api_key=${API_KEY}&language=es-ES`
+        )
+        .then(r=>r.json())
+        .then(datos=>{
+
+            // Nombre personalizado (si existe)
+const tituloManual = tarjeta.dataset.nombre?.trim();
+
+// Si no existe, usar el de TMDB
+const titulo =
+    tituloManual ||
+    datos.title ||
+    datos.name ||
+    "Sin título";
+
+// Mostrar un título recortado
+const tituloMostrar =
+    titulo.length > 30
+        ? titulo.substring(0, 30).trim() + "..."
+        : titulo;
+
+tarjeta.querySelector(".titulo-serie").textContent = tituloMostrar;
+
+// Póster obtenido desde TMDB
+const img = tarjeta.querySelector("img");
+
+// Poster personalizado (si existe)
+const posterManual = tarjeta.dataset.poster?.trim();
+
+img.src =
+    posterManual ||
+    (datos.poster_path ? IMG + datos.poster_path : "");
+
+img.alt = titulo;
+
+        })
+        .catch(console.error);
+
+        promesas.push(p);
+
+    });
+
+    await Promise.all(promesas);
+
+}
+
+(async()=>{
+
+    await cargarPeliculas();
 
     const imagenes = document.querySelectorAll(".poster img");
+
     let cargadas = 0;
 
     function comprobar(){
+
         cargadas++;
+
         if(cargadas === imagenes.length){
-            setTimeout(hideLoading, 500);
+
+            setTimeout(hideLoading,500);
+
         }
+
     }
 
     imagenes.forEach(img=>{
+
         if(img.complete){
+
             comprobar();
+
         }else{
-            img.addEventListener("load", comprobar);
-            img.addEventListener("error", comprobar);
+
+            img.onload = comprobar;
+            img.onerror = comprobar;
+
         }
+
     });
 
-});
+})();
 </script>
 
 <script>
